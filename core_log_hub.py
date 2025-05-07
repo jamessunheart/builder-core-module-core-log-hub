@@ -23,21 +23,14 @@ class CoreLogHub:
             "total_cycles": len(self.logs["executions"]),
             "diagnostics": len(self.logs["diagnostics"]),
             "plans_made": len(self.logs["plans"]),
-            "last_action": self.logs["executions"][-1] if self.logs["executions"] else None
+            "last_action": self.logs["executions"][-1] if self.logs["executions"] else None,
+            "coverage": {
+                "self-awareness": len(self.logs["diagnostics"]) > 0,
+                "strategic_planning": len(self.logs["plans"]) > 0,
+                "autonomy": len(self.logs["executions"]) > 0
+            }
         }
 
-# Simulate log of current cycle
-from self_diagnostic_engine import SelfDiagnosticEngine
-from meta_reflection_planner import MetaReflectionPlanner
-from autopilot_priority_executor import AutopilotPriorityExecutor
-
-log_hub = CoreLogHub()
-diagnostics = SelfDiagnosticEngine().run_diagnostics()
-plan = MetaReflectionPlanner().generate_improvement_plan(diagnostics)
-result = AutopilotPriorityExecutor().run_autopilot_cycle()
-
-log_hub.record_diagnostic(diagnostics)
-log_hub.record_plan(plan)
-log_hub.record_execution(result)
-
-print("Summary:", log_hub.summarize())
+# Instantiate and summarize current metrics
+hub = CoreLogHub()
+print("Core Metrics:", hub.summarize())
